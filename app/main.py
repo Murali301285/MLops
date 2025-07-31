@@ -20,7 +20,8 @@ model = None
 @app.on_event("startup")
 def load_model():
     global model
-    model_path = "./model_artifacts" # Path inside the container
+    # FIX: Point to the nested 'model' directory
+    model_path = "./model_artifacts/model" # Path inside the container
 
     try:
         # Load the model from the local directory

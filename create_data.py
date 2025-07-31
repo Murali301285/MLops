@@ -1,4 +1,3 @@
-# create_data.py
 import pandas as pd
 from sklearn.datasets import load_iris
 
@@ -7,6 +6,9 @@ iris = load_iris()
 df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
 df['target'] = iris.target
 
+# FIX: Clean the column names to be Python-friendly (e.g., 'sepal length (cm)' -> 'sepal_length')
+df.columns = [col.replace(' (cm)', '').replace(' ', '_') for col in df.columns]
+
 # Save to the data directory
 df.to_csv('data/iris.csv', index=False)
-print("data/iris.csv created successfully.")
+print("data/iris.csv created successfully with clean column names.")

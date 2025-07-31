@@ -1,0 +1,36 @@
+artifact_path: file:D:/OneDrive/BITS Mtech/Semester/3rd Sem/MLOps/Assignments/Mlops-pipeline-assignment/mlruns/903380498503987064/models/m-e0e795c0bb174ae9bb058b33f7f083d0/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.7
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.1
+is_signature_from_type_hint: false
+mlflow_version: 3.1.4
+model_id: m-e0e795c0bb174ae9bb058b33f7f083d0
+model_size_bytes: 1341
+model_uuid: m-e0e795c0bb174ae9bb058b33f7f083d0
+prompts: null
+run_id: 6784add8f3634ed1b0439907a1c859dc
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "sepal_length", "required": true}, {"type":
+    "double", "name": "sepal_width", "required": true}, {"type": "double", "name":
+    "petal_length", "required": true}, {"type": "double", "name": "petal_width", "required":
+    true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-07-31 12:07:24.400560'

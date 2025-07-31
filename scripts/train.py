@@ -6,6 +6,7 @@ from sklearn.metrics import accuracy_score
 import mlflow
 import mlflow.sklearn
 import shutil
+import os
 
 # Use a simple relative path for the tracking URI.
 mlflow.set_tracking_uri("file:./mlruns")
