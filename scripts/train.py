@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import mlflow
 import mlflow.sklearn
+import shutil
 
 # Use a simple relative path for the tracking URI.
 mlflow.set_tracking_uri("file:./mlruns")
@@ -31,7 +32,7 @@ def train_model(model, model_name, params):
         # Log the model and its signature
         model_info = mlflow.sklearn.log_model(
             sk_model=model,
-            name="model",
+            artifact_path="model",
             signature=mlflow.models.infer_signature(input_example, model.predict(input_example)),
             input_example=input_example
         )
@@ -44,7 +45,7 @@ lr_model_info, lr_accuracy = train_model(LogisticRegression(**lr_params), "Logis
 rf_params = {'n_estimators': 100, 'max_depth': 5}
 rf_model_info, rf_accuracy = train_model(RandomForestClassifier(**rf_params), "RandomForestClassifier", rf_params)
 
-# --- Automatically Promote the Best Model ---
+# --- Automatically Promote and Save the Best Model ---
 model_name = "IrisClassifier"
 client = mlflow.tracking.MlflowClient()
 
@@ -58,10 +59,17 @@ else:
 # Register the best model
 registered_model = mlflow.register_model(best_model_uri, model_name)
 
-# Set the "prod" alias on the newly registered model version
-client.set_registered_model_alias(
-    name=model_name,
-    alias="prod",
-    version=registered_model.version
+# --- Save the best model locally for Docker build ---
+local_model_path = "app/model_artifacts"
+
+# Clean up the old model artifacts directory if it exists
+if os.path.exists(local_model_path):
+    shutil.rmtree(local_model_path)
+
+# Download the newly registered model version's artifacts
+client.download_artifacts(
+    run_id=registered_model.run_id,
+    path="model", # The artifact path used in log_model
+    dst_path=local_model_path
 )
-print(f"Model '{model_name}' version '{registered_model.version}' has been registered and assigned the 'prod' alias.")
+print(f"Model version {registered_model.version} saved to {local_model_path} for deployment.")
