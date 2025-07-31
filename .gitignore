@@ -1,0 +1,16 @@
+# Python virtual environments
+env/
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# MLflow local tracking files
+mlruns/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
