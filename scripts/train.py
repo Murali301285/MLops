@@ -5,10 +5,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import mlflow
 import mlflow.sklearn
-import os
 
-# Set the MLflow tracking URI. This will create a 'mlruns' directory in the project root.
-mlflow.set_tracking_uri("file:" + os.path.join(os.path.dirname(__file__), '..', 'mlruns'))
+# Use a simple relative path for the tracking URI.
+mlflow.set_tracking_uri("file:./mlruns")
 mlflow.set_experiment("Iris_Classification")
 
 print("Loading data...")
@@ -28,23 +27,41 @@ def train_model(model, model_name, params):
 
         mlflow.log_params(params)
         mlflow.log_metric("accuracy", accuracy)
-        mlflow.sklearn.log_model(
+
+        # Log the model and its signature
+        model_info = mlflow.sklearn.log_model(
             sk_model=model,
-            artifact_path="model",
+            name="model",
             signature=mlflow.models.infer_signature(input_example, model.predict(input_example)),
             input_example=input_example
         )
-        return run.info.run_id, accuracy
+        return model_info, accuracy
 
 # --- Train Models ---
 lr_params = {'C': 1.0, 'solver': 'liblinear'}
-lr_run_id, lr_accuracy = train_model(LogisticRegression(**lr_params), "LogisticRegression", lr_params)
+lr_model_info, lr_accuracy = train_model(LogisticRegression(**lr_params), "LogisticRegression", lr_params)
 
 rf_params = {'n_estimators': 100, 'max_depth': 5}
-rf_run_id, rf_accuracy = train_model(RandomForestClassifier(**rf_params), "RandomForestClassifier", rf_params)
+rf_model_info, rf_accuracy = train_model(RandomForestClassifier(**rf_params), "RandomForestClassifier", rf_params)
 
-# --- Register the Best Model ---
-best_run_id = lr_run_id if lr_accuracy > rf_accuracy else rf_run_id
-model_uri = f"runs:/{best_run_id}/model"
-registered_model = mlflow.register_model(model_uri, "IrisClassifier")
-print(f"Model '{registered_model.name}' version '{registered_model.version}' registered.")
+# --- Automatically Promote the Best Model ---
+model_name = "IrisClassifier"
+client = mlflow.tracking.MlflowClient()
+
+if lr_accuracy >= rf_accuracy:
+    best_model_uri = lr_model_info.model_uri
+    print(f"Logistic Regression is the best model with accuracy: {lr_accuracy}. Registering it.")
+else:
+    best_model_uri = rf_model_info.model_uri
+    print(f"Random Forest is the best model with accuracy: {rf_accuracy}. Registering it.")
+
+# Register the best model
+registered_model = mlflow.register_model(best_model_uri, model_name)
+
+# Set the "prod" alias on the newly registered model version
+client.set_registered_model_alias(
+    name=model_name,
+    alias="prod",
+    version=registered_model.version
+)
+print(f"Model '{model_name}' version '{registered_model.version}' has been registered and assigned the 'prod' alias.")
