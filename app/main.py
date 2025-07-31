@@ -20,15 +20,14 @@ model = None
 @app.on_event("startup")
 def load_model():
     global model
-    model_name = "IrisClassifier"
-    model_uri = f"models:/{model_name}@prod"
-    print (model_uri)
+    model_path = "./model_artifacts" # Path inside the container
+
     try:
-        # Load the model with the 'prod' alias
-        model = mlflow.pyfunc.load_model(model_uri=model_uri)
-        logger.info(f"Successfully loaded model from {model_uri}")
+        # Load the model from the local directory
+        model = mlflow.pyfunc.load_model(model_uri=model_path)
+        logger.info(f"Successfully loaded model from {model_path}")
     except Exception as e:
-        logger.error(f"Failed to load model from {model_uri}. Error: {e}")
+        logger.error(f"Failed to load model from {model_path}. Error: {e}")
         model = None
 
 @app.post("/predict")
