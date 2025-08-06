@@ -3,3 +3,4 @@ scikit-learn
 mlflow
 fastapi
 uvicorn
+prometheus-client

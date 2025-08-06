@@ -1,0 +1,26 @@
+2025-08-05 08:18:35,420 - INFO - Successfully loaded model from ./model_artifacts/model
+2025-08-05 08:19:12,263 - INFO - Retraining trigger received.
+2025-08-05 08:19:17,565 - INFO - Retraining script finished successfully.
+Loading data...
+Training LogisticRegression...
+Accuracy: 1.0
+Training RandomForestClassifier...
+Accuracy: 1.0
+Logistic Regression is the best model with accuracy: 1.0. Registering it.
+Model version 1 saved to app/model_artifacts for deployment.
+
+2025-08-05 08:19:17,598 - INFO - Successfully loaded model from ./model_artifacts/model
+2025-08-05 11:01:10,912 - INFO - INPUT: {'sepal_length': 6.1, 'sepal_width': 2.8, 'petal_length': 4.7, 'petal_width': 1.2} -> PREDICTION: 1
+2025-08-05 11:01:16,489 - INFO - INPUT: {'sepal_length': 7.3, 'sepal_width': 2.9, 'petal_length': 6.3, 'petal_width': 1.8} -> PREDICTION: 2
+2025-08-05 11:01:21,587 - INFO - INPUT: {'sepal_length': 4.9, 'sepal_width': 3.1, 'petal_length': 1.5, 'petal_width': 0.1} -> PREDICTION: 0
+2025-08-05 11:09:22,994 - INFO - Retraining trigger received.
+2025-08-05 11:09:30,127 - INFO - Retraining script finished successfully.
+Loading data...
+Training LogisticRegression...
+Accuracy: 1.0
+Training RandomForestClassifier...
+Accuracy: 1.0
+Logistic Regression is the best model with accuracy: 1.0. Registering it.
+Model version 2 saved to app/model_artifacts for deployment.
+
+2025-08-05 11:09:30,175 - INFO - Successfully loaded model from ./model_artifacts/model
