@@ -1,4 +1,4 @@
-artifact_path: file:D:/OneDrive/BITS Mtech/Semester/3rd Sem/MLOps/Assignments/Mlops-pipeline-assignment/mlruns/903380498503987064/models/m-d2baaadadb1a4657ae047083beaadee8/artifacts
+artifact_path: file:D:/OneDrive/BITS Mtech/Semester/3rd Sem/MLOps/Assignments/Mlops-pipeline-assignment/mlruns/903380498503987064/models/m-75efb2c487ed49d08ca50c7262d1b65e/artifacts
 flavors:
   python_function:
     env:
@@ -15,11 +15,11 @@ flavors:
     sklearn_version: 1.5.1
 is_signature_from_type_hint: false
 mlflow_version: 3.1.4
-model_id: m-d2baaadadb1a4657ae047083beaadee8
+model_id: m-75efb2c487ed49d08ca50c7262d1b65e
 model_size_bytes: 1341
-model_uuid: m-d2baaadadb1a4657ae047083beaadee8
+model_uuid: m-75efb2c487ed49d08ca50c7262d1b65e
 prompts: null
-run_id: 39bdf9620a604be9bf1d2d419e8b90b5
+run_id: a430a9e5a48241e489df893fda922f3c
 saved_input_example_info:
   artifact_path: input_example.json
   pandas_orient: split
@@ -33,4 +33,4 @@ signature:
   outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
   params: null
 type_hint_from_example: false
-utc_time_created: '2025-08-05 05:04:46.051271'
+utc_time_created: '2025-08-08 12:56:49.151764'

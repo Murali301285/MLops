@@ -9,7 +9,7 @@ from prometheus_client import Counter, make_asgi_app
 
 # --- Configuration & Setup ---
 
-# FIX: Use a more robust root logger configuration
+
 log_dir = "logs"
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
@@ -42,7 +42,7 @@ app.mount("/metrics", metrics_app)
 @app.on_event("startup")
 def load_model():
     global model
-    model_path = "./model_artifacts/model" # Path inside the container
+    model_path = "./model_artifacts/model" 
 
     try:
         model = mlflow.pyfunc.load_model(model_uri=model_path)
@@ -76,8 +76,8 @@ def retrain():
     logging.info("Retraining trigger received.")
     try:
         # Run the training script as a subprocess
-        # This is synchronous and will block until completion.
-        # For production, use a background task queue (e.g., Celery).
+      
+        
         result = subprocess.run(
             ["python", "scripts/train.py"],
             capture_output=True,

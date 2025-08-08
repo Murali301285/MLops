@@ -6,7 +6,7 @@ iris = load_iris()
 df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
 df['target'] = iris.target
 
-# FIX: Clean the column names to be Python-friendly (e.g., 'sepal length (cm)' -> 'sepal_length')
+
 df.columns = [col.replace(' (cm)', '').replace(' ', '_') for col in df.columns]
 
 # Save to the data directory
